@@ -6,7 +6,7 @@ $_SESSION["CSRF"] = $token;
 //session_destroy();
 //echo $_SESSION["CSRF"];
 
-/*
+
 // Страница авторизации 
 // Функция для генерации случайной строки
 function generateCode($length=6) {
@@ -21,8 +21,9 @@ function generateCode($length=6) {
 
 // Соединяемся с БД
 
+echo 'hhhhhhhh';
 $link = mysqli_connect("localhost", "root", "root", "task25_users"); 
-echo $_POST["token"] . ' g ';
+echo $_POST["token"] . '  ';
 echo $_SESSION["CSRF"];
 if(isset($_POST['submit']))
 { 
@@ -86,7 +87,7 @@ if($_POST["token"] == $_SESSION["CSRF"])
        
 
         // Переадресовываем браузер на страницу проверки нашего скрипта
-        header("Location: check.php"); exit(); 
+        header("Location: check.php"); exit();*/ 
         header("Location: hello.php"); exit();
     }
     
@@ -95,25 +96,21 @@ if($_POST["token"] == $_SESSION["CSRF"])
     }
     
 }
-}*/
+}
 ?>
-
-</html>
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
 
   <title>Login</title>
-
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   <script src="ajax.js"></script>
-
 </head>
 
 <body>
     <form method="post" id="ajax_form" action="" >
-    <input type="text" name="login" placeholder="Логин" required><br/>
+        <input type="text" name="login" placeholder="Логин" required><br/>
         <input type="password" name="password" placeholder="Пароль" required> <br/>
         <input type="hidden" name="token" value="<?=$token?>"> 
         <label>
@@ -122,9 +119,8 @@ if($_POST["token"] == $_SESSION["CSRF"])
         <input type="submit" id="btn" name="submit" value="Войти"><br/><br/>
         <a href="index.php"> Зарегистрироваться
     </form>
-
     <br>
-
     <div id="result_form"></div> 
+    
 </body>
 </html>

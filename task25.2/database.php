@@ -1,10 +1,5 @@
 <?php
 session_start();
-
-$token = hash('gost-crypto', random_int(0,999999));
-$_SESSION["CSRF"] = $token;
-//session_destroy();
-
 // Страница авторизации 
 // Функция для генерации случайной строки
 function generateCode($length=6) {
@@ -19,14 +14,17 @@ function generateCode($length=6) {
 
 
 // Соединяемся с БД
-$link = mysqli_connect("localhost", "root", "root", "task25_users"); 
-
-if(isset($_POST['submit']))
-{
-   // echo $_POST["token"] . '  ';
-   // echo $_SESSION["CSRF"];
-    //if($_POST["token"] == $_SESSION["CSRF"])
-    //{
+function checkLogPas ($resultToken) {
+    echo 'hhhhhhhh';
+    $link = mysqli_connect("localhost", "root", "root", "task25_users"); 
+echo $_POST["token"] . '  ';
+    echo $_SESSION["CSRF"];
+    $_POST["token"] = $resultToken;
+//if(isset($_POST['submit']))
+//{ 
+   
+    if($_POST["token"] == $_SESSION["CSRF"])
+    {
         //Начинаем проверку логина и пароля в БД
 
         // Вытаскиваем из БД запись, у которой логин равняется введенному
@@ -92,18 +90,5 @@ if(isset($_POST['submit']))
             print "Вы ввели неправильный логин/пароль";
         }
         
-    //}
+    }
 }
-?>
-
-<form method="post" action="">
-<input type="text" name="login" placeholder="Логин" required><br/>
-<input type="password" name="password" placeholder="Пароль" required> <br/>
-<input type="hidden" name="token" value="<?=$token?>"> 
-<label>
-    <input type="checkbox" name="remember_me"> Запомнить меня
-</label> <br/>
-<input type="submit" name="submit" value="Войти"><br/><br/>
-<a href="index.php"> Зарегистрироваться
-
-</form>

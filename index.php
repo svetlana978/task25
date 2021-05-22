@@ -1,7 +1,7 @@
 <?php
 // Страница регистрации нового пользователя 
 // Соединяемся с БД
-$link = mysqli_connect("localhost", "root", "root", "registration"); 
+$link = mysqli_connect("localhost", "root", "root", "task25_users"); 
 if(isset($_POST['submit']))
 {
     $err = [];
@@ -16,9 +16,10 @@ if(isset($_POST['submit']))
     } 
     // проверяем, не существует ли пользователя с таким именем
     $log = $_POST['login'];
-    $query = "SELECT user_id FROM users WHERE user_login = '$log'";
+    $query = "SELECT user_id FROM users WHERE login = '$log'";
     $result = mysqli_query($link, $query);
-    if($result)
+    
+    if(mysqli_fetch_assoc($result) != NULL)
     {
         $err[] = "Пользователь с таким логином уже существует в базе данных";
     } 
@@ -28,7 +29,7 @@ if(isset($_POST['submit']))
         $login = $_POST['login'];
         // Убираем лишние пробелы и делаем двойное хэширование (используем старый метод md5)
         $password = md5(md5(trim($_POST['password']))); 
-        mysqli_query($link,"INSERT INTO users SET user_login='".$login."', user_password='".$password."'");
+        mysqli_query($link,"INSERT INTO users SET login='$login', password='$password'");
         header("Location: login.php"); exit();
     }
     else
@@ -45,4 +46,5 @@ if(isset($_POST['submit']))
 Логин <input name="login" type="text" required><br>
 Пароль <input name="password" type="password" required><br>
 <input name="submit" type="submit" value="Зарегистрироваться">
+<a href="login.php"> Войти
 </form>

@@ -8,12 +8,12 @@
 function get_connection()
 {
     
-    return new PDO('mysql:host=database;port=3307;dbname=registration', 'root', 'root');
+    return new PDO('mysql:host=localhost;port=3307;dbname=task25_users', 'root', 'root');
 }
 
 function insert(array $data)
 {
-    $query = 'INSERT INTO users (login, password, created_at) VALUES(?, ?, ?)';
+    $query = 'INSERT INTO users (login, password) VALUES(?, ?)';
     $db = get_connection();
     $stmt = $db->prepare($query);
     return $stmt->execute($data);
